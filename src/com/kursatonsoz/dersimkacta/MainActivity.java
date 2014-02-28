@@ -98,8 +98,10 @@ public class MainActivity extends Activity {
 					int gelen_dk = Integer.valueOf(String.valueOf(mCursor
 							.getString(mCursor.getColumnIndex(db.KEY_DAKIKA))));
 					// eger 30 dk gectiyse gonderme
-					if ((sai - gelen_saat) > 0 && (60 - gelen_dk + dai) > 30) {
-						continue;
+					if ((sai - gelen_saat) >= 0 && (60 - gelen_dk + dai) > 30) {
+						if ((sai-gelen_saat)==0 && (dai-gelen_dk) > 30) {
+							continue;
+						}
 
 					}
 					veri += "Ders Adı -> ";
@@ -131,12 +133,20 @@ public class MainActivity extends Activity {
 							}
 
 						} else if ((sai - gelen_saat) < 0) {
-
-							veri += "\nDersin Başlamasına "
-									+ String.valueOf(gelen_saat - sai - 1)
-									+ " saat "
-									+ String.valueOf(60 + gelen_dk - dai)
-									+ " dakika kaldı.";
+							if((gelen_dk>dai)){
+								veri += "\nDersin Başlamasına "
+										+ String.valueOf(gelen_saat - sai)
+										+ " saat "
+										+ String.valueOf(gelen_dk - dai)
+										+ " dakika kaldı.";
+							}else{
+								veri += "\nDersin Başlamasına "
+										+ String.valueOf(gelen_saat - sai - 1)
+										+ " saat "
+										+ String.valueOf(60 + gelen_dk - dai)
+										+ " dakika kaldı.";
+							}
+							
 
 						}
 
