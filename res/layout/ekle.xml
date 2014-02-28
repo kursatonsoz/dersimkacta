@@ -18,7 +18,7 @@
             android:textColor="#000" />
 
         <EditText
-            android:id="@+id/frst_editTxt"
+            android:id="@+id/ders_adiTxt"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/frst_txtV" />
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
    <TextView
-            android:id="@+id/frst_txtV"
+            android:id="@+id/frst_txtV1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Saat"
@@ -39,14 +39,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/saat_arrays"
-            android:prompt="@string/saatsec" />
+            android:prompt="@string/saatsec"
+            android:layout_toRightOf="@+id/frst_txtV1" />
 	    </LinearLayout>
 	     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     
 	      <TextView
-            android:id="@+id/frst_txtV"
+            android:id="@+id/frst_txtV2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Dakika"
@@ -57,14 +58,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/dakika_arrays"
-            android:prompt="@string/dakikasec" />
+            android:prompt="@string/dakikasec"
+            android:layout_toRightOf="@+id/frst_txtV2" />
 </LinearLayout>
      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/frst_txtV"
+            android:id="@+id/frst_txtV3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gün"
@@ -75,7 +77,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/gun_arrays"
-            android:prompt="@string/gunsec" />
+            android:prompt="@string/gunsec" 
+            android:layout_toRightOf="@+id/frst_txtV3"/>
     </LinearLayout>
 
     <LinearLayout
@@ -83,7 +86,7 @@
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/lst_txtV"
+            android:id="@+id/lst_txtV4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -91,7 +94,7 @@
             android:textColor="#000" />
 
         <EditText
-            android:id="@+id/last_editTxt"
+            android:id="@+id/ders_yeriTxt"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
