@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
 				});
 				
 			}
-		}, 0,100);
+		}, 0,30000);
 
 		Button sec = (Button) findViewById(R.id.button2);
 		sec.setOnClickListener(new OnClickListener() {
@@ -82,7 +82,6 @@ public class MainActivity extends Activity {
 		int sai = Integer.valueOf(saat);
 		int dai = Integer.valueOf(dk);
 		Date d = new Date();
-		System.out.println(c.get(Calendar.DAY_OF_WEEK));
 		c.setTime(d);
 		int currentDay = c.get(Calendar.DAY_OF_WEEK);
 		String gun = gunCevir(currentDay);
@@ -223,10 +222,12 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onResume() {
 		Calendar c = Calendar.getInstance();
-		String saat1 = String.format("%02d", c.get(Calendar.HOUR_OF_DAY));
-		String dk1 = String.format("%02d", c.get(Calendar.MINUTE));
 		Date d = new Date();
 		c.setTime(d);
+		String saat1 = String.format("%02d", c.get(Calendar.HOUR_OF_DAY));
+		String dk1 = String.format("%02d", c.get(Calendar.MINUTE));
+		
+		
 		int currentDay = c.get(Calendar.DAY_OF_WEEK);
 		String gun = gunCevir(currentDay);
 		if (bugunDersVarmi(gun)) {
