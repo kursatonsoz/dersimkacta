@@ -1,6 +1,7 @@
 package com.kursatonsoz.dersimkacta;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.ads.AdRequest;
@@ -33,7 +35,12 @@ public class MainActivity extends Activity {
 
 	private Database db = new Database(this);
 	private SQLiteDatabase dataBase;
-
+	private ArrayList<String> ders_adi = new ArrayList<String>();
+	private ArrayList<String> ders_saat = new ArrayList<String>();
+	private ArrayList<String> ders_uyari = new ArrayList<String>();
+	private ArrayList<String> ders_yer = new ArrayList<String>();
+	private ListView dersList;
+	
 	private AdView adView;
 	private PendingIntent pendingIntent;
 
@@ -41,8 +48,9 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		Hatirlat(00, 0, 0);
-		Hatirlat(0x08, 0, 0);
+		dersList = (ListView) findViewById(R.id.List1);
+		
+		
 		LinearLayout layout = (LinearLayout) findViewById(R.id.reklam);
 		adView = new AdView(this, AdSize.BANNER,
 				"ca-app-pub-6711691671497768/9551407933");
@@ -51,18 +59,7 @@ public class MainActivity extends Activity {
 
 		adView.loadAd(request);
 
-		final TextView tv = (TextView) findViewById(R.id.textView1);
-
-		new Timer().schedule(new TimerTask() {
-			@Override
-			public void run() {
-				runOnUiThread(new Runnable() {
-					public void run() {
-						tv.setText(displayData());
-					}
-				});
-			}
-		}, 0, 1000);
+		
 		Button sec = (Button) findViewById(R.id.button2);
 		sec.setOnClickListener(new OnClickListener() {
 
@@ -73,8 +70,7 @@ public class MainActivity extends Activity {
 		});
 	}
 
-	private String displayData() {
-		String veri = "";
+	private void dataGoster(){
 		Calendar c = Calendar.getInstance();
 		String saat = String.format("%02d", c.get(Calendar.HOUR_OF_DAY));
 		String dk = String.format("%02d", c.get(Calendar.MINUTE));
@@ -84,84 +80,83 @@ public class MainActivity extends Activity {
 		Date d = new Date();
 		String currentDay = sdf.format(d);
 		String gun = gunCevir(currentDay);
+		dataBase = db.getWritableDatabase();
 		String x = "SELECT * FROM " + db.TABLE_NAME + " WHERE " + db.KEY_GUN
 				+ "='" + gun + "'";
-		if (gun != null) {
-			veri = "Bugünkü Derslerin\n------------------------------------\n";
-			dataBase = db.getWritableDatabase();
-			Cursor mCursor = dataBase.rawQuery(x, null);
-			if (mCursor.moveToFirst()) {
+		
+		ders_adi.clear();
+		ders_uyari.clear();
+		ders_saat.clear();
+		ders_yer.clear();
+		Cursor mCursor = dataBase.rawQuery(x , null);
+		if (mCursor.moveToFirst()) {
+			do {
+				int gelen_saat = Integer.valueOf(String.valueOf(mCursor
+						.getString(mCursor.getColumnIndex(db.KEY_SAAT))));
+				int gelen_dk = Integer.valueOf(String.valueOf(mCursor
+						.getString(mCursor.getColumnIndex(db.KEY_DAKIKA))));
+				// eger 30 dk gectiyse gonderme
+				if ((sai - gelen_saat) >= 0 && (60 - gelen_dk + dai) > 30) {
+					if ((sai-gelen_saat)==0 && (dai-gelen_dk) > 30) {
+						continue;
+					}
 
-				do {
-					int gelen_saat = Integer.valueOf(String.valueOf(mCursor
-							.getString(mCursor.getColumnIndex(db.KEY_SAAT))));
-					int gelen_dk = Integer.valueOf(String.valueOf(mCursor
-							.getString(mCursor.getColumnIndex(db.KEY_DAKIKA))));
-					// eger 30 dk gectiyse gonderme
-					if ((sai - gelen_saat) >= 0 && (60 - gelen_dk + dai) > 30) {
-						if ((sai-gelen_saat)==0 && (dai-gelen_dk) > 30) {
-							continue;
+				}
+				ders_adi.add(mCursor.getString(mCursor
+						.getColumnIndex(Database.KEY_DERSADI)));
+				ders_saat.add(mCursor.getString(mCursor
+						.getColumnIndex(Database.KEY_SAAT))+":"+mCursor.getString(mCursor
+								.getColumnIndex(Database.KEY_DAKIKA)));
+				ders_yer.add(mCursor.getString(mCursor
+						.getColumnIndex(Database.KEY_YER)));
+				
+				if ((sai - gelen_saat) <= 0) {
+					if ((sai - gelen_saat) == 0) {
+						if ((dai - gelen_dk) >= 0) {
+
+							ders_uyari.add("\nAcele Etmelisin ! Ders "
+									+ String.valueOf(dai - gelen_dk)
+									+ " dakika önce başladı.");
+
+						} else {
+							ders_uyari.add("\nDersin Başlamasına "
+									+ String.valueOf(gelen_dk - dai)
+									+ " dakika kaldı.");
 						}
 
-					}
-					veri += "Ders Adı -> ";
-					veri += String.valueOf(mCursor.getString(mCursor
-							.getColumnIndex(db.KEY_DERSADI)));
-					veri += "\n";
-					veri += "Ders Saati -> ";
-					veri += String.valueOf(mCursor.getString(mCursor
-							.getColumnIndex(db.KEY_SAAT)));
-					veri += ":";
-					veri += String.valueOf(mCursor.getString(mCursor
-							.getColumnIndex(db.KEY_DAKIKA)));
-					veri += "\n";
-					veri += "Ders Yeri -> ";
-					veri += String.valueOf(mCursor.getString(mCursor
-							.getColumnIndex(db.KEY_YER)));
-					if ((sai - gelen_saat) <= 0) {
-						if ((sai - gelen_saat) == 0) {
-							if ((dai - gelen_dk) >= 0) {
-
-								veri += "\nAcele Etmelisin ! Ders "
-										+ String.valueOf(dai - gelen_dk)
-										+ " dakika önce başladı.";
-
-							} else {
-								veri += "\nDersin Başlamasına "
-										+ String.valueOf(gelen_dk - dai)
-										+ " dakika kaldı.";
-							}
-
-						} else if ((sai - gelen_saat) < 0) {
-							if((gelen_dk>dai)){
-								veri += "\nDersin Başlamasına "
-										+ String.valueOf(gelen_saat - sai)
-										+ " saat "
-										+ String.valueOf(gelen_dk - dai)
-										+ " dakika kaldı.";
-							}else{
-								veri += "\nDersin Başlamasına "
-										+ String.valueOf(gelen_saat - sai - 1)
-										+ " saat "
-										+ String.valueOf(60 + gelen_dk - dai)
-										+ " dakika kaldı.";
-							}
-							
-
+					} else if ((sai - gelen_saat) < 0) {
+						if((gelen_dk>dai)){
+							ders_uyari.add("\nDersin Başlamasına "
+									+ String.valueOf(gelen_saat - sai)
+									+ " saat "
+									+ String.valueOf(gelen_dk - dai)
+									+ " dakika kaldı.");
+						}else{
+							ders_uyari.add("\nDersin Başlamasına "
+									+ String.valueOf(gelen_saat - sai - 1)
+									+ " saat "
+									+ String.valueOf(60 + gelen_dk - dai)
+									+ " dakika kaldı.");
 						}
+						
 
-					} else if ((sai - gelen_saat) == 1) {
-						veri += "\nAcele Etmelisin ! Ders "
-								+ String.valueOf(60 - gelen_dk + dai)
-								+ " dakika önce başladı.";
 					}
-					veri += "\n-------------------------------------------\n";
-				} while (mCursor.moveToNext());
-			}
-			mCursor.close();
-			dataBase.close();
+
+				} else if ((sai - gelen_saat) == 1) {
+					ders_uyari.add("\nAcele Etmelisin ! Ders "
+							+ String.valueOf(60 - gelen_dk + dai)
+							+ " dakika önce başladı.");
+				}else {
+					ders_uyari.add("");
+				}
+
+			} while (mCursor.moveToNext());
 		}
-		return veri;
+		
+		DisplayAdapterG disadpt = new DisplayAdapterG(MainActivity.this,
+				ders_adi, ders_saat ,ders_yer, ders_uyari);
+		dersList.setAdapter(disadpt);
+		mCursor.close();
 	}
 
 	private String gunCevir(String gun) {
@@ -184,6 +179,7 @@ public class MainActivity extends Activity {
 	}
 
 	private void Hatirlat(int saat, int dk, int sn) {
+
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.set(Calendar.HOUR_OF_DAY, saat);
@@ -201,10 +197,18 @@ public class MainActivity extends Activity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+	protected void onResume() {
+		Calendar c = Calendar.getInstance();
+		String saat1 = String.format("%02d", c.get(Calendar.HOUR_OF_DAY));
+		String dk1 = String.format("%02d", c.get(Calendar.MINUTE));
+		if("00".equals(saat1) && "00".equals(dk1)){
+			Hatirlat(00, 0, 0);
+		}
+		if ("08".equals(saat1) && "00".equals(dk1)) {
+			Hatirlat(0x08, 0, 0);
+		}
+		dataGoster();
+		super.onResume();
 	}
 
 }
