@@ -156,8 +156,8 @@ public class Goster extends Activity {
 
 			} while (mCursor.moveToNext());
 		}
-		DisplayAdapter disadpt = new DisplayAdapter(Goster.this,ders_id,
-				ders_adi, ders_saat ,ders_dk, ders_gun);
+		DisplayAdapter disadpt = new DisplayAdapter(Goster.this,
+				ders_adi, ders_saat ,ders_dk, ders_gun,ders_yer);
 		dersList.setAdapter(disadpt);
 		mCursor.close();
 	}

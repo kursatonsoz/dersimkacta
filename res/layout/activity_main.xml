@@ -3,45 +3,43 @@
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
-
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Tüm Dersler/Ders Seçimi" />
-    <View
-        android:id="@+id/a1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/button2"
-        android:background="#8DB3E1" />
-
-    <ListView
-        android:id="@+id/List1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/reklam"
-        android:layout_below="@+id/a1"
-        android:divider="#8DB3E1"
-        android:dividerHeight="2dp" />
 
     <LinearLayout
         android:id="@+id/reklam"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
         android:orientation="vertical" >
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/List1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/button2"
+        android:layout_below="@+id/reklam"
+        android:divider="#598e96"
+        android:dividerHeight="1dp" />
+
+    <Button
+        android:id="@+id/button2"
+        style="@style/btnStyleSeagull"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Tüm Dersler/Ders Seçimi" />
+
+    <View
+        android:id="@+id/a1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
 
 </RelativeLayout>

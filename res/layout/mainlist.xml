@@ -2,36 +2,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#dedede"
+    android:background="#000"
     android:gravity="center_vertical"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="8dp" >
 
     <TextView
         android:id="@+id/adgst"
-        android:layout_width="0dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:textColor="#000" />
+        android:textColor="#fff" />
 
     <TextView
         android:id="@+id/saatgst"
-        android:layout_width="0dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:textColor="#000" />
+        android:textSize="10dp"
+        android:textColor="#ccc" />
+
     <TextView
         android:id="@+id/yergst"
-        android:layout_width="0dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:textColor="#000" />
+        android:textColor="#ccc"
+        android:textSize="10dp" />
+
     <TextView
         android:id="@+id/uyarigst"
-        android:layout_width="0dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:textColor="#000" />
-
+        android:textColor="#ccc"
+        android:textSize="10dp" />
 
 </LinearLayout>

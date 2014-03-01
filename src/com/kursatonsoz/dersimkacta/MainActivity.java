@@ -113,36 +113,36 @@ public class MainActivity extends Activity {
 				
 				ders_adi.add(mCursor.getString(mCursor
 						.getColumnIndex(Database.KEY_DERSADI)));
-				ders_saat.add(mCursor.getString(mCursor
+				ders_saat.add("Ders Saati: "+mCursor.getString(mCursor
 						.getColumnIndex(Database.KEY_SAAT))
 						+ ":"
 						+ mCursor.getString(mCursor
 								.getColumnIndex(Database.KEY_DAKIKA)));
-				ders_yer.add(mCursor.getString(mCursor
+				ders_yer.add("Ders Yeri: "+mCursor.getString(mCursor
 						.getColumnIndex(Database.KEY_YER)));
 
 				if ((sai - gelen_saat) <= 0) {
 					if ((sai - gelen_saat) == 0) {
 						if ((dai - gelen_dk) >= 0) {
 
-							ders_uyari.add("\nAcele Etmelisin ! Ders "
+							ders_uyari.add("Acele Etmelisin ! Ders "
 									+ String.valueOf(dai - gelen_dk)
 									+ " dakika önce başladı.");
 
 						} else {
-							ders_uyari.add("\nDersin Başlamasına "
+							ders_uyari.add("Dersin Başlamasına "
 									+ String.valueOf(gelen_dk - dai)
 									+ " dakika kaldı.");
 						}
 
 					} else if ((sai - gelen_saat) < 0) {
 						if ((gelen_dk > dai)) {
-							ders_uyari.add("\nDersin Başlamasına "
+							ders_uyari.add("Dersin Başlamasına "
 									+ String.valueOf(gelen_saat - sai)
 									+ " saat " + String.valueOf(gelen_dk - dai)
 									+ " dakika kaldı.");
 						} else {
-							ders_uyari.add("\nDersin Başlamasına "
+							ders_uyari.add("Dersin Başlamasına "
 									+ String.valueOf(gelen_saat - sai - 1)
 									+ " saat "
 									+ String.valueOf(60 + gelen_dk - dai)
@@ -152,7 +152,7 @@ public class MainActivity extends Activity {
 					}
 
 				} else if ((sai - gelen_saat) == 1) {
-					ders_uyari.add("\nAcele Etmelisin ! Ders "
+					ders_uyari.add("Acele Etmelisin ! Ders "
 							+ String.valueOf(60 - gelen_dk + dai)
 							+ " dakika önce başladı.");
 				} else {

@@ -3,40 +3,32 @@
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#dedede"
-    android:gravity="center_horizontal" >
- <LinearLayout
-        android:id="@+id/reklam2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:orientation="vertical" >
-    </LinearLayout>
-    
-    <Button
-        android:id="@+id/btnAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Ders Ekle" />
-
-    <View
-        android:id="@+id/a"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/btnAdd"
-        android:background="#8DB3E1" />
+    android:background="#000"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
 
     <ListView
         android:id="@+id/List"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/a"
-        android:divider="#8DB3E1"
-        android:dividerHeight="2dp" />
+        android:layout_above="@+id/btnAdd"
+        android:divider="#598e96"
+        android:dividerHeight="1dp" />
+   <Button
+        android:id="@+id/btnAdd"
+        style="@style/btnStyleSeagull"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Ders Ekle" />
+
+    <View
+        android:id="@+id/a"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"  />
+
+    
 
 </RelativeLayout>
