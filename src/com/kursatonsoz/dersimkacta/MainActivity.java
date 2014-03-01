@@ -76,9 +76,10 @@ public class MainActivity extends Activity {
 		String dk = String.format("%02d", c.get(Calendar.MINUTE));
 		int sai = Integer.valueOf(saat);
 		int dai = Integer.valueOf(dk);
-		SimpleDateFormat sdf = new SimpleDateFormat("EEE");
 		Date d = new Date();
-		String currentDay = sdf.format(d);
+		System.out.println(c.get(Calendar.DAY_OF_WEEK));
+		c.setTime(d);
+		int currentDay = c.get(Calendar.DAY_OF_WEEK);
 		String gun = gunCevir(currentDay);
 		dataBase = db.getWritableDatabase();
 		String x = "SELECT * FROM " + db.TABLE_NAME + " WHERE " + db.KEY_GUN
@@ -159,20 +160,20 @@ public class MainActivity extends Activity {
 		mCursor.close();
 	}
 
-	private String gunCevir(String gun) {
-		if ("Mon".equals(gun))
+	private String gunCevir(int gun) {
+		if (gun==2)
 			return "Pazartesi";
-		if ("Tue".equals(gun))
+		if (gun==3)
 			return "Salı";
-		if ("Wed".equals(gun))
+		if (gun==4)
 			return "Çarşamba";
-		if ("Thu".equals(gun))
+		if (gun==5)
 			return "Perşembe";
-		if ("Fri".equals(gun))
+		if (gun==6)
 			return "Cuma";
-		if ("Sat".equals(gun))
+		if (gun==7)
 			return "Cumartesi";
-		if ("Sun".equals(gun))
+		if (gun==1)
 			return "Pazar";
 		else
 			return null;
